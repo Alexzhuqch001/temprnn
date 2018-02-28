@@ -4,6 +4,7 @@ To run the demo, pls see the main function, train_rnn_seq.py, by changing the di
 This demo can be run in windows OS.
 
 =======================================================================================================================================================
+
 Implementation of temporal ensembling and Pi-model.
 Samuli Laine and Timo Aila, NVIDIA.
 
@@ -18,5 +19,4 @@ Package versions used when preparing the paper:
 - Lasagne 0.2.dev1
 - CUDA toolkit 8.0, CUDNN 5105
 
-To configure a training run, edit config.py. To execute, run train.py.
-=======================================================================================================================================================
+To configure a training run, edit config.py. To execute, run train_rnn_seq.py.
