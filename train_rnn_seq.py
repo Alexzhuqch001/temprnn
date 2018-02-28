@@ -174,10 +174,7 @@ def load_tinyimages(indices, output_array=None, output_start_index=0):
 
 def load_imu():
     import scipy.io
-    # filename='E:\\alexzqc\\newproj\\accelerationHAR\\data\\UCI HAR Dataset\\body_acc_xyz.mat'    
-    # filename='E:\\alexzqc\\newproj\\accelerationHAR\\fft_3x128x2d.mat' 
-    # filename='E:\\alexzqc\\newproj\\accelerationHAR\\accGyroTotal_3x128x3d.mat'
-    # raw -- feat
+    # to input your dir right here
     filename='E:\\alexzqc\\newproj\\accelerationHAR\\data\\UCI HAR Dataset\\feature_561d.mat' 
 
     data = scipy.io.loadmat(filename)
@@ -423,26 +420,7 @@ def build_network(input_var, num_input_channel, num_features, num_classes):
    
     # layer_in = InputLayer        (     name='input',    shape=(None, num_input_channel, num_features), input_var=input_var)
     
-    # conv layer is neglected      
-    # cnn1 = Conv1DLayer      (layer_in, name='cnn1', num_filters=48, filter_size=3, stride=1, nonlinearity=lasagne.nonlinearities.LeakyRectify(0.1) )
-    # cnn2 = Conv1DLayer      (cnn1, name='cnn2', num_filters=48, filter_size=3, stride=1, nonlinearity=lasagne.nonlinearities.LeakyRectify(0.1) )
-    # cnn3 = Conv1DLayer      (cnn2, name='cnn3', num_filters=48, filter_size=3, stride=1, nonlinearity=lasagne.nonlinearities.LeakyRectify(0.1) )
-    # bn_cnn3 = BatchNormLayer (cnn3)
-    # pool1 = MaxPool1DLayer  (bn_cnn3, name='pool1',    pool_size=2)
-    # dp0 = DropoutLayer      (pool1, name='drop1',    p=.5)
-
-    # test the rnn
-    # rnn1 = GRULayer         (layer_in, name='l_forward1',     num_units=128, grad_clipping=config.GRAD_CLIP, nonlinearities=lasagne.nonlinearities.LeakyRectify(0.1))
-    # bn_rnn1 = BatchNormLayer(rnn1)
-    # dp1 = DropoutLayer      (bn_rnn1, name='drop1',    p=.5)
-    # rnn2 = GRULayer         (dp1, name='l_forward2',     num_units=192, grad_clipping=config.GRAD_CLIP)
-    # bn_rnn2 = BatchNormLayer(rnn2)
-    # dp2 = DropoutLayer      (bn_rnn2, name='drop2',    p=.5)
-    # rnn3 = GRULayer         (dp2, name='l_forward3',     num_units=256, grad_clipping=config.GRAD_CLIP, only_return_final=True)
-    # bn_rnn3 = BatchNormLayer(rnn3)
-    # dp3 = DropoutLayer      (bn_rnn3, name='drop3',    p=.5)
-    # net = WN(DenseLayer     (dp3, name='dense',          num_units=num_classes, W = lasagne.init.Normal(), nonlinearity=lasagne.nonlinearities.softmax))    
-    
+       
     # bidirectional lstm
     # l_in = InputLayer(shape=(config.minibatch_size, num_input_channel, num_features), input_var=input_var)
     # l_in = GaussianNoiseLayer(l_in, name='noise',    sigma=config.augment_noise_stddev)    
@@ -471,7 +449,7 @@ def build_network(input_var, num_input_channel, num_features, num_classes):
     #                                       nonlinearity=lasagne.nonlinearities.softmax)    
 
 
-    # current best performance: recurrent layer without BN and Dropout--???
+    # DLSTM
     net = InputLayer        (     name='input',    shape=(None, num_input_channel, num_features), input_var=input_var)
     net = GaussianNoiseLayer(net, name='noise',    sigma=config.augment_noise_stddev)
     net = LSTMLayer         (net, name='l_forward1',     num_units=48, grad_clipping=config.GRAD_CLIP,cell_init=lasagne.init.HeNormal(gain='relu'),hid_init=lasagne.init.HeNormal(gain='relu'), nonlinearity=lasagne.nonlinearities.LeakyRectify(0.1))
